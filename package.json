@@ -1,0 +1,37 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Demure-Coders/backend.git"
+  },
+  "author": "amanksingh007",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Demure-Coders/backend/issues"
+  },
+  "homepage": "https://github.com/Demure-Coders/backend#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.11",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.4.16",
+    "nodemon": "^2.0.6",
+    "pdf-to-base64": "^1.0.3"
+  },
+  "engines": {
+    "node": "14.17.0"
+  }
+}
