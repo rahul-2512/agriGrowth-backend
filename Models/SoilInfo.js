@@ -9,6 +9,13 @@ const soilSchema = new mongoose.Schema(
       maxlength: 32,
       trim: true,
     },
+    requestor: {
+      type: String,
+      required: true,
+      minlength: 3,
+      maxlength: 32,
+      trim: true,
+    },
     email: {
       type: String,
       required: true,
@@ -17,15 +24,18 @@ const soilSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
+    phoneNo:{
+      type:Number
+    },
     requestedFor: {
       type: String,
-      enum: ["self", "other"],
-      default: "self",
+      enum: ["Self", "Other"],
+      default: "Self",
     },
     status: {
       type: String,
-      enum: ["pending", "completed"],
-      default: "pending",
+      enum: ["Pending", "Completed"],
+      default: "Pending",
     },
     report: {
       type: String,

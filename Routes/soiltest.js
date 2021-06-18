@@ -6,7 +6,6 @@ const uAuthenticator = require("../Middlewares/uAuthenticator");
 router.post("/newTest", [uAuthenticator], async (req, res) => {
   try {
     let soiltestdata = req.body.data;
-    soiltestdata.userId = req.authUser._id;
     soiltestdata.forEach((data) => {
       data.userId = req.authUser._id;
     });
