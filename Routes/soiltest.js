@@ -1,20 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-const config = require("../config");
 const { SoilTest } = require("../Models/SoilInfo");
-const { User } = require("../Models/User");
 const uAuthenticator = require("../Middlewares/uAuthenticator");
-const aAuthenticator = require("../Middlewares/aAuthenticator");
-const fs = require("fs");
 
 router.post("/newTest", [uAuthenticator], async (req, res) => {
   try {
-    let soiltestdata = { ...req.body };
+    let soiltestdata = req.body.data;
     soiltestdata.userId = req.authUser._id;
-    let soiltest = new SoilTest(soiltestdata);
-    await soiltest.save();
-    return res.status(201).send(soiltest);
+    soiltestdata.forEach((data) => {
+      data.userId = req.authUser._id;
+    });
+    //let soiltest = new SoilTest(soiltestdata);
+    let result = await SoilTest.insertMany(soiltestdata);
+    if (result) {
+      // console.log(result);
+      return res.status(200).send(result);
+    } else
+      return res
+        .status(400)
+        .send({ message: "Error occured while creating soil request." });
   } catch (ex) {
     console.log(ex);
     return res.status(500).send({ message: "Server error occured." });
@@ -26,7 +30,9 @@ router.post("/soilInfo", [uAuthenticator], async (req, res) => {
     const soilInfo = req.body.soilInfo;
     let soiltestData = await SoilTest.findOne({ _id: soiltestId });
     if (!soiltestData) {
-      return res.status(404).send({ message: "Soil test request doesn't exist" });
+      return res
+        .status(404)
+        .send({ message: "Soil test request doesn't exist" });
     }
     soiltestData.soilInfo = soilInfo;
     await soiltestData.save();
@@ -43,7 +49,9 @@ router.post("/cropInfo", [uAuthenticator], async (req, res) => {
     const cropInfo = req.body.cropInfo;
     let soiltestData = await SoilTest.findOne({ _id: soiltestId });
     if (!soiltestData) {
-      return res.status(404).send({ message: "Soil test request doesn't exist" });
+      return res
+        .status(404)
+        .send({ message: "Soil test request doesn't exist" });
     }
     soiltestData.cropInfo = cropInfo;
     await soiltestData.save();
@@ -100,7 +108,9 @@ router.get(
       const soiltestId = req.params.soiltestId;
       let soilTestData = await SoilTest.findOne({ _id: soiltestId });
       if (!soilTestData) {
-        return res.status(404).send({ message: "Soil test request doesn't exist" });
+        return res
+          .status(404)
+          .send({ message: "Soil test request doesn't exist" });
       }
       return res.status(200).send(soilTestData.report);
     } catch (ex) {

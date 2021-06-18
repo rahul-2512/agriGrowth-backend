@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "agrigrowth-backend",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,16 +8,7 @@
     "dev": "nodemon app.js",
     "start": "node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Demure-Coders/backend.git"
-  },
-  "author": "amanksingh007",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Demure-Coders/backend/issues"
-  },
-  "homepage": "https://github.com/Demure-Coders/backend#readme",
+  "author": "Parag Saxena",
   "dependencies": {
     "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
@@ -32,6 +23,6 @@
     "pdf-to-base64": "^1.0.3"
   },
   "engines": {
-    "node": "14.17.0"
+    "node": "14.17.1"
   }
 }
