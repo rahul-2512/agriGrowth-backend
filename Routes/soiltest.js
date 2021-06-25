@@ -23,6 +23,9 @@ router.post("/newTest", [uAuthenticator], async (req, res) => {
     return res.status(500).send({ message: "Server error occured." });
   }
 });
+
+
+
 router.post("/soilInfo", [uAuthenticator], async (req, res) => {
   try {
     const soiltestId = req.body.soiltestId;
@@ -71,6 +74,21 @@ router.get("/mytests", [uAuthenticator], async (req, res) => {
   }
 });
 
+router.delete("/mytests/:soiltestId", [uAuthenticator], async (req, res) => {
+  const soiltestId = req.params.soiltestId;
+  let soilTestData = await SoilTest.findOne({ _id: soiltestId });
+  if (!soilTestData) {
+    return res.status(404).send({ message: "Soil test request doesn't exist" });
+  }  
+  try {
+    let soiltestData = await SoilTest.deleteOne(soilTestData);
+    return res.status(200).send(soiltestData);
+  } catch (ex) {
+    console.log(ex);
+    return res.status(501).send({ message: "Server error occured." });
+  }
+});
+
 router.get("/alltests", [uAuthenticator], async (req, res) => {
   try {
     let soiltestData = await SoilTest.find();
@@ -90,7 +108,7 @@ router.post("/uploadReport/:soiltestId", [uAuthenticator], async (req, res) => {
   try {
     var base64report = Buffer.from(req.files[0].buffer).toString("base64");
     soilTestData.report = base64report;
-    soilTestData.status = "completed";
+    soilTestData.status = "Completed";
     await soilTestData.save();
     return res.status(200).send(soilTestData);
   } catch (ex) {
