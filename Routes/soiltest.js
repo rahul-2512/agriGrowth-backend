@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { SoilTest } = require("../Models/SoilInfo");
 const uAuthenticator = require("../Middlewares/uAuthenticator");
+const aAuthenticator = require("../Middlewares/aAuthenticator");
 
 router.post("/newTest", [uAuthenticator], async (req, res) => {
   try {
@@ -108,7 +109,7 @@ router.post("/uploadReport/:soiltestId", [uAuthenticator], async (req, res) => {
   try {
     var base64report = Buffer.from(req.files[0].buffer).toString("base64");
     soilTestData.report = base64report;
-    soilTestData.status = "Completed";
+    soilTestData.status = "Completed Report";
     await soilTestData.save();
     return res.status(200).send(soilTestData);
   } catch (ex) {
@@ -136,5 +137,40 @@ router.get(
     }
   }
 );
+
+// uploadPrediction
+router.post(
+  "/uploadPrediction/:soiltestId",[aAuthenticator],
+  async (req, res) => {
+    const soiltestId = req.params.soiltestId;
+    let soilTestData = await SoilTest.findOne({ _id: soiltestId });
+    if (!soilTestData) {
+      return res.status(404).send({ message: "Soil test request doesn't exist" });
+    }
+    try {
+      var base64report = Buffer.from(req.files[0].buffer).toString("base64");
+      soilTestData.prediction = base64report;
+      soilTestData.predictionStatus = "Completed Predication";
+      await soilTestData.save();
+      return res.status(200).send({ res: soilTestData });
+    } catch (ex) {
+      console.log(ex);
+      return res.status(500).send({ message: "Server error occured." });
+    }
+  }
+);
+router.get("/downloadPrediction/:soiltestId", [], async (req, res) => {
+  try {
+    const soiltestId = req.params.soiltestId;
+    let soilTestData = await SoilTest.findOne({ _id: soiltestId });
+    if (!soilTestData) {
+      return res.status(404).send({ message: "Soil test request doesn't exist" });
+    }
+    return res.status(200).send({ res: soilTestData.prediction });
+  } catch (ex) {
+    console.log(ex);
+    return res.status(500).send({ message: "Server error occured." });
+  }
+});
 
 module.exports = router;

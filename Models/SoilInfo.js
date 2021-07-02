@@ -34,8 +34,8 @@ const soilSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Pending", "Completed"],
-      default: "Pending",
+      enum: ["Pending Report", "Completed Report"],
+      default: "Pending Report",
     },
     report: {
       type: String,
@@ -75,6 +75,15 @@ const soilSchema = new mongoose.Schema(
         area: String,
         production: Number,
       },
+    },
+    prediction: {
+      type: String,
+      default: null,
+    },
+    predictionStatus: {
+      type: String,
+      enum: ["Pending Predication", "Completed Predication"],
+      default: "Pending Predication",
     },
   },
   { timestamps: true }
