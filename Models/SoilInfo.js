@@ -82,8 +82,8 @@ const soilSchema = new mongoose.Schema(
     },
     predictionStatus: {
       type: String,
-      enum: ["Pending Predication", "Completed Predication"],
-      default: "Pending Predication",
+      enum: ["Pending Prediction", "Completed Prediction"],
+      default: "Pending Prediction",
     },
   },
   { timestamps: true }

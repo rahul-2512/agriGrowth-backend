@@ -150,7 +150,7 @@ router.post(
     try {
       var base64report = Buffer.from(req.files[0].buffer).toString("base64");
       soilTestData.prediction = base64report;
-      soilTestData.predictionStatus = "Completed Predication";
+      soilTestData.predictionStatus = "Completed Prediction";
       await soilTestData.save();
       return res.status(200).send({ res: soilTestData });
     } catch (ex) {
