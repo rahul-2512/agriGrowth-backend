@@ -166,7 +166,7 @@ router.get("/downloadPrediction/:soiltestId", [], async (req, res) => {
     if (!soilTestData) {
       return res.status(404).send({ message: "Soil test request doesn't exist" });
     }
-    return res.status(200).send({ res: soilTestData.prediction });
+    return res.status(200).send(soilTestData.prediction);
   } catch (ex) {
     console.log(ex);
     return res.status(500).send({ message: "Server error occured." });
